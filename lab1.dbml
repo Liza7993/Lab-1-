@@ -3,7 +3,7 @@ Table Customer {
   name varchar [not null]
   email varchar [unique]
   hash varchar(255) [not null]
-  registrationDate timestamp [not null, default: now()]
+  registrationDate timestamp [not null, default: "now()"]
 }
 
 Table SpiceCategory {
@@ -24,7 +24,7 @@ Table Spice {
 Table SpiceOrder {
   id integer [primary key, increment]
   status varchar [not null]
-  createDate timestamp [not null, default: now()]
+  createDate timestamp [not null, default: "now()"]
   customerId integer [not null]
 }
 
