@@ -1,42 +1,5 @@
-Table Customer {
-  id integer [primary key, increment]
-  name varchar [not null]
-  email varchar [unique]
-  hash varchar(255) [not null]
-  registrationDate timestamp [not null, default: "now()"]
-}
+У цій базі даних створено структуру для магазину спецій, який продає різні види приправ. Модель складається з п’яти таблиць: Customer, SpiceCategory, Spice, SpiceOrder і SpiceOrderContent.
 
-Table SpiceCategory {
-  id integer [primary key, increment]
-  name varchar [unique]
-  description text [not null]
-}
+Таблиця Customer містить інформацію про клієнтів — їхні імена, електронні адреси, паролі та дату реєстрації. SpiceCategory описує категорії спецій, а Spice зберігає дані про самі товари: назву, опис, ціну, кількість і посилання на категорію. SpiceOrder відповідає за дані про замовлення — його статус, дату створення та клієнта. SpiceOrderContent поєднує замовлення зі спеціями, фіксуючи кількість кожного товару та його ціну на момент покупки.
 
-Table Spice {
-  id integer [primary key, increment]
-  name varchar [unique]
-  description text [not null]
-  price decimal(10,2) [not null]
-  quantity integer [not null, default: 0]
-  categoryId integer [not null]
-}
-
-Table SpiceOrder {
-  id integer [primary key, increment]
-  status varchar [not null]
-  createDate timestamp [not null, default: "now()"]
-  customerId integer [not null]
-}
-
-Table SpiceOrderContent {
-  id integer [primary key, increment]
-  orderId integer [not null]
-  spiceId integer [not null]
-  productPrice decimal(10,2) [not null]
-  productQuantity integer [not null]
-}
-
-Ref: Spice.categoryId > SpiceCategory.id
-Ref: SpiceOrderContent.orderId > SpiceOrder.id
-Ref: SpiceOrderContent.spiceId > Spice.id
-Ref: SpiceOrder.customerId > Customer.id
+Таким чином, між таблицями встановлено логічні зв’язки: клієнт може мати кілька замовлень, кожне замовлення містить кілька спецій, а кожна спеція належить до певної категорії.
